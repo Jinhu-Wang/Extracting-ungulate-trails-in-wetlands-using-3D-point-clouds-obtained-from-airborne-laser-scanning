@@ -1,5 +1,3 @@
-# Extracting-ungulate-trails-in-wetlands-using-3D-point-clouds-obtained-from-airborne-laser-scanning
-
 This repository holds the input data and the source codes for extracting ungulate trails in wetlands using 3D point clouds obtained from airborne laser scanning.
 
 There are three folders:
