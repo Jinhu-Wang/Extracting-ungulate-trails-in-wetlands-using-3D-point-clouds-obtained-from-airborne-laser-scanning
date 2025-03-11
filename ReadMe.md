@@ -2,7 +2,7 @@ This repository holds the input data and the source codes for extracting ungulat
 
 There are three folders:
 
-[GroundTruth] 
+[GroundTruth]
 This folder consists of the manually created ground truth of the trails. A ReadMe.txt file is included in the folder for data format description.
 
 [Polygons]
