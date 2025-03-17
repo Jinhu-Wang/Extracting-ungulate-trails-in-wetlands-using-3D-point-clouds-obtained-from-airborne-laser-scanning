@@ -100,11 +100,11 @@ int main(int argc, char** argv)
 	clip->setLasFileDirName(lasFilePath);
 	clip->runClipping3(); 
 
-  if(clip)
-  {
-    delete clip;
-    clip=nullptr;
-  }
+  	if(clip)
+  	{
+    		delete clip;
+    		clip=nullptr;
+  	}
 	return 0;
 }
 ````
