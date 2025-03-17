@@ -51,14 +51,14 @@ The 'Python' can be run either on Colab or on your local environment, just to en
 
   - On Linux or maxOS, simply:
     ```
-    $ cd path-to-root-dir-of-Trees
+    $ cd path-to-root-dir-of-project
     $ mkdir release  && cd release
     $ cmake -DCMAKE_BUILD_TYPE=release ..
     $ make
     ```
   - On Windows with Microsoft Visual Studio, use the `x64 Native Tools Command Prompt for VS XXXX` (**don't** use the x86 one), then
     ```
-      $ cd path-to-root-dir-of-Trees
+      $ cd path-to-root-dir-of-project
       $ mkdir Release
       $ cd Release
       $ cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
