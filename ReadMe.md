@@ -85,11 +85,12 @@ Below shows an example on the usage of 'C++' Module [1_clipping]
 
 int main(int argc, char** argv)
 {
-  std::string shpFilePath = "Path\\to\\shapefile";
+	// Set the file and folder paths.
+	std::string shpFilePath = "Path\\to\\shapefile";
 	std::string lasFilePath = "Path\\to\\Input\\LAS\\Files\\";
 	std::string lasFileOutputPath = "Path\\to\\Output\\LAS\\Files\\";
 
-  mm::ClipLas* clip = new mm::ClipLas;
+  	mm::ClipLas* clip = new mm::ClipLas;
 	
 	clip->ListFilesInDirectory(lasFilePath);
 	clip->setOutputLasPath(lasFileOutputPath);
