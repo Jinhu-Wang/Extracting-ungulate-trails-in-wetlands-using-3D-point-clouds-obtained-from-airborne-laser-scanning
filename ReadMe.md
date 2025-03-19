@@ -1,4 +1,4 @@
-Folder [Workflow] consists of the source code of the workflow and the contents are described below:
+Folder **[Workflow]** contains the source code for the workflow, with its contents described below:
 
 ## Table of Contents
 
@@ -11,128 +11,130 @@ Folder [Workflow] consists of the source code of the workflow and the contents a
 - [Contact](#contact)
 
 ## Overview
-This repository holds the input data and the source codes for extracting ungulate trails in marsh area of [Oostvaardersplassen](https://www.staatsbosbeheer.nl/uit-in-de-natuur/locaties/oostvaardersplassen) using 3D point clouds obtained from airborne laser scanning, i.e. [AHN4](https://www.arcgis.com/home/webscene/viewer.html?webscene=c6db29808aad459cbf6488cd96828e9a) point clouds. Their are four major steps in the workflow: 1) Pre-processing; 2) Near-Terrain filtering; 3) Digital Terrain Model generation; and 4) Trail extraction. 
+
+This repository contains the input data and source code for extracting ungulate trails in the marsh area of [Oostvaardersplassen](https://www.staatsbosbeheer.nl/uit-in-de-natuur/locaties/oostvaardersplassen) using 3D point clouds obtained from airborne laser scanning, specifically [AHN4](https://www.arcgis.com/home/webscene/viewer.html?webscene=c6db29808aad459cbf6488cd96828e9a) point clouds. The workflow consists of four major steps:
+
+1. **Pre-processing**  
+2. **Near-terrain filtering**  
+3. **Digital Terrain Model (DTM) generation**  
+4. **Trail extraction**  
 
 ## File Structure
 
 ```plaintext
 Workflow/
 │
-├── 0_dependencies/      # The used dependencies, i.e. LASTools, PointCloud data structure and nanoflann for neighbourhood searching.
-|
-├── 1_clipping/          # The source code for clipping the original point clouds to smaller tiles.
-|
-├── 2_near_terrain_filtering/       # Filtering of the near-terrain and the vegetation points from the re-tiled original point clouds.
-|
-├── 3_dtm_generation/       # Generate the Digital Terrain Models of the re-tiled point clouds.
-|
-└── 4_trail_extraction/       # Extract the trails from the generated DTMs.
-
+├── 0_dependencies/          # Required dependencies, including LAStools, PointCloud data structures, and nanoflann for neighborhood searching.
+│
+├── 1_clipping/              # Source code for clipping the original point clouds into smaller tiles.
+│
+├── 2_near_terrain_filtering/ # Filtering near-terrain and vegetation points from the re-tiled point clouds.
+│
+├── 3_dtm_generation/        # Generation of Digital Terrain Models (DTMs) from the re-tiled point clouds.
+│
+└── 4_trail_extraction/      # Extraction of trails from the generated DTMs.
 ```
 
 ## Requirements
 
-### 'C++' codes
+### C++ Code
 
-The `C++` scripts in this repository depends on the **[LAStools](https://lastools.github.io/)** to read point cloud data in **LAS/LAZ** formats.
+The `C++` scripts in this repository depend on **[LAStools](https://lastools.github.io/)** for reading point cloud data in **LAS/LAZ** formats.
 
-To use the scripts, a `C++` compiler, i.e. `g++`,`gcc`, `mscv`, `clang++`, etc., should be installed.
+To use the scripts, a `C++` compiler such as `g++`, `gcc`, `msvc`, or `clang++` must be installed.
 
-### 'Python' codes
+### Python Code
 
-The 'Python' can be run either on Colab or on your local environment, just to ensure the required packages are correctly installed.
-
+The Python scripts can be run either on Google Colab or in a local environment, provided that the required packages are correctly installed.
 
 ## Usage Instructions 
 
-### There are three ways to build:
+### There are three ways to build the project:
 
-- Option 1: Using CMake to generate makefiles and then 'make' (on Linux/macOS).
+- **Option 1: Using CMake to generate Makefiles and then running `make` (Linux/macOS).**
 
-  - On Linux or maxOS, simply:
+  - On Linux or macOS:
+    ```sh
+    cd path-to-root-dir-of-project
+    mkdir release && cd release
+    cmake -DCMAKE_BUILD_TYPE=release ..
+    make
     ```
-    $ cd path-to-root-dir-of-project
-    $ mkdir release  && cd release
-    $ cmake -DCMAKE_BUILD_TYPE=release ..
-    $ make
-    ```
-  - On Windows with Microsoft Visual Studio, use the `x64 Native Tools Command Prompt for VS XXXX` (**don't** use the x86 one), then
-    ```
-      $ cd path-to-root-dir-of-project
-      $ mkdir Release
-      $ cd Release
-      $ cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
-      $ nmake
+  - On Windows with Microsoft Visual Studio, use the `x64 Native Tools Command Prompt for VS XXXX` (**do not** use the x86 version). Then run:
+    ```sh
+    cd path-to-root-dir-of-project
+    mkdir Release && cd Release
+    cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+    nmake
     ```
 
-- Option 2: Use any IDE that can directly handle CMakeLists files to open the `CMakeLists.txt` in the **root** directory of Trees3D.
-  Then you should have obtained a usable project and just build it. I recommend using
-  [CLion](https://www.jetbrains.com/clion/) or [QtCreator](https://www.qt.io/product). For Windows users: your IDE must be set for `x64`.
-  
-- Option 3: Use CMake-Gui to generate project files for your IDE. Then load the project to your IDE and build it. For Windows users: your IDE must be set for `x64`.
+- **Option 2: Using an IDE that supports CMakeLists.txt.**  
+  Open the `CMakeLists.txt` file in the **root** directory of the project with an IDE such as [CLion](https://www.jetbrains.com/clion/) or [QtCreator](https://www.qt.io/product). Then, build the project.  
 
+  **Note for Windows users:** Ensure that your IDE is set to `x64`.  
+
+- **Option 3: Using CMake-GUI to generate project files for an IDE.**  
+  Load the generated project into your IDE and build it.  
+
+  **Note for Windows users:** Ensure that your IDE is set to `x64`.  
 
 ## Example 
-Below shows an example on the usage of 'C++' Module [1_clipping] 
 
-```javascript {.line-number}
+### Example Usage of the C++ Module `[1_clipping]`
 
-#include"clip_las.h"
-#include"../shapelib/shapelib/shapefil.h"
+```cpp
+#include "clip_las.h"
+#include "../shapelib/shapelib/shapefil.h"
 
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 
 int main(int argc, char** argv)
 {
-	// Set the file and folder paths.
-	std::string shpFilePath = "Path\\to\\shapefile";
-	std::string lasFilePath = "Path\\to\\Input\\LAS\\Files\\";
-	std::string lasFileOutputPath = "Path\\to\\Output\\LAS\\Files\\";
+    // Set the file and folder paths.
+    std::string shpFilePath = "Path\\to\\shapefile";
+    std::string lasFilePath = "Path\\to\\Input\\LAS\\Files\\";
+    std::string lasFileOutputPath = "Path\\to\\Output\\LAS\\Files\\";
 
-  	mm::ClipLas* clip = new mm::ClipLas;
-	
-	clip->ListFilesInDirectory(lasFilePath);
-	clip->setOutputLasPath(lasFileOutputPath);
-	clip->setShpFilePath(shpFilePath);
-	clip->readShpFile2();
-	clip->getPositivePolygons(); 
-	clip->setLasFileDirName(lasFilePath);
-	clip->runClipping3(); 
+    mm::ClipLas* clip = new mm::ClipLas;
+    
+    clip->ListFilesInDirectory(lasFilePath);
+    clip->setOutputLasPath(lasFileOutputPath);
+    clip->setShpFilePath(shpFilePath);
+    clip->readShpFile2();
+    clip->getPositivePolygons(); 
+    clip->setLasFileDirName(lasFilePath);
+    clip->runClipping3(); 
 
-  	if(clip)
-  	{
-    		delete clip;
-    		clip=nullptr;
-  	}
-	return 0;
+    if (clip)
+    {
+        delete clip;
+        clip = nullptr;
+    }
+    return 0;
 }
-````
-Below shows an example on the usage of 'Python' Module [3_dtm_generation]
+```
 
-```javascript {.line-number}
+### Example Usage of the Python Module `[3_dtm_generation]`
 
-input_laz = "Path/to/LAS/file"  # Replace with your LiDAR file path
+```python
+input_laz = "Path/to/LAS/file"  # Replace with the actual LiDAR file path
 
 # Set the DTM resolution in meters
 resolution = 1.0 
 
 # Generate and visualize DTM using KNN
-# Here, six options are available, i.e., IDW, NNI, KRIGING, SPLINE, TIN, KNN
+# Available methods: IDW, NNI, KRIGING, SPLINE, TIN, KNN
 dtm = generate_dtm(input_laz, resolution, method="IDW")
 ``` 
 
 ## License
 
-MIT License
+This project is licensed under the **MIT License**.
 
 ## Contact
 
-For any suggestions and bug reports, please contact:
+For any suggestions or bug reports, please contact:
 
-Jinhu Wang
-
-jinhu.wang (at) hotmail (dot) com
-
-
-
+**Jinhu Wang**  
+📧 jinhu.wang (at) hotmail (dot) com  
