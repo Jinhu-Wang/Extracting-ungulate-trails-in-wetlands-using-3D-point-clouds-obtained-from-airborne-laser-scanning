@@ -89,7 +89,7 @@ To use the scripts, a `C++` compiler such as `g++`, `gcc`, `msvc`, or `clang++` 
 int main(int argc, char** argv)
 {
     // Set the file and folder paths.
-    std::string shpFilePath = "Path\\to\\shapefile";
+    std::string shpFilePath = "Path\\to\\shapefile.shp";
     std::string lasFilePath = "Path\\to\\Input\\LAS\\Files\\";
     std::string lasFileOutputPath = "Path\\to\\Output\\LAS\\Files\\";
 
