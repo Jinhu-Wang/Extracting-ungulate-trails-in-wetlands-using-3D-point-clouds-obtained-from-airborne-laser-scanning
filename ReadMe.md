@@ -43,9 +43,6 @@ The `C++` scripts in this repository depend on **[LAStools](https://lastools.git
 
 To use the scripts, a `C++` compiler such as `g++`, `gcc`, `msvc`, or `clang++` must be installed.
 
-### Python Code
-
-The Python scripts can be run either on Google Colab or in a local environment, provided that the required packages are correctly installed.
 
 ## Usage Instructions 
 
@@ -115,18 +112,7 @@ int main(int argc, char** argv)
 }
 ```
 
-### Example Usage of the Python Module `[3_dtm_generation]`
 
-```python
-input_laz = "Path/to/LAS/file"  # Replace with the actual LiDAR file path
-
-# Set the DTM resolution in meters
-resolution = 1.0 
-
-# Generate and visualize DTM using KNN
-# Available methods: IDW, NNI, KRIGING, SPLINE, TIN, KNN
-dtm = generate_dtm(input_laz, resolution, method="IDW")
-``` 
 
 ## License
 
